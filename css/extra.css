@@ -25,6 +25,11 @@ a {
 .pdesc {
   
 }
+
+.pdesc ul {
+  padding-left: 7em;
+}
+
 .pend {
   clear: both;
 }
