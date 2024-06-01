@@ -3,6 +3,50 @@ a {
     text-decoration: none;
 }
 
+section {
+    margin-top: 20px;
+}
+
+.abstract {
+  text-align: justify;
+  /* padding: 0 2% 0 2%; */
+}
+
+.paperpage-title {
+  font-weight: bold;
+  color: #055C9D;
+}
+
+.author {
+  font-size: 14pt;
+    font-weight: bold;
+    color: #636566;
+    margin-top: 2px;
+    padding: 0px;
+}
+
+.team-name {
+    font-size: 14pt;
+    font-weight: bold;
+    color: #055C9D;
+    margin-top: 2px;
+    padding: 0px;
+}
+
+.team-role {
+  padding: 0px;
+  /* margin-top: -20px; */
+}
+
+.bibtex-container {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  padding: 10px;
+  font-size: 12pt;
+  user-select: text;
+  font-family: monospace;
+}
+
 .icon {
     width: 40px;
     height: 40px;
@@ -88,3 +132,19 @@ img.rounded {
     padding: 2px 0px 2px 10px;
     margin-bottom: 10px;
   }
+
+/* Colors */
+.color-blue {
+  color: rgb(65,105,225);
+  font-style: normal;
+}
+
+.color-green {
+  color: rgb(74,103,65);
+  font-style: normal;
+}
+
+.color-red {
+  color: rgb(178,34,34);
+  font-style: normal;
+}
