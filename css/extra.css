@@ -8,8 +8,9 @@ section {
 }
 
 .equation-container {
-  width: 100%; /* Set the width of the container, adjust as needed */
+  width: 102%; /* Set the width of the container, adjust as needed */
   overflow-x: auto; /* Enables horizontal scrolling */
+  overflow-y: hidden;
   white-space: nowrap; /* Keeps the equation in a single line */
 }
 
