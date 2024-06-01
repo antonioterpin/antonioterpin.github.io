@@ -43,7 +43,7 @@
             </div>
         </div>
         <section>
-        <div class="row justify-content-center text-center">
+        <div class="row justify-content-center">
             <div class="col-12 col-md-8">
                 <h3>Project description</h3>
                 <p class="abstract">
@@ -86,21 +86,26 @@
                 <h3>Diffusion processes and the JKO step</h3>
                 <p class="abstract" style="margin-top: 20px;">
                     Many continuous-time diffusion processes can be modeled by a PDE or SDE. For instance, a set of particles undergoing <em class="color-blue">drift</em> and <em class="color-green">diffusion</em>,
+                    <div class="equation-container">
                     $$
                     \definecolor{colorblue}{RGB}{65,105,225}
                     \definecolor{colorgreen}{RGB}{74,103,65}
                     \definecolor{colorred}{RGB}{178,34,34}
                     \mathrm{d} X(t) = -\textcolor{colorblue}{\nabla{}{V}(X(t))\mathrm{d} t} + \textcolor{colorgreen}{\sqrt{2\beta}\mathrm{d} W(t)},
                     $$
+                    </div>
                     is captured by the Fokker-Planck equation
-                    $$
-                    \frac{\partial \rho_t}{\partial t} = \textcolor{colorblue}{\nabla\cdot{(\nabla{V}\rho_t)}} + \textcolor{colorgreen}{\beta\nabla^2{\rho_t}},
-                    $$
-                    where \(\rho_t\) is the probability density of the particles at time \(t\), \(\beta\) is the diffusion coefficient (related to the internal energy), and \(V\) is the potential energy term which causes the drift. 
+                    <div class="equation-container">
+                        $$
+                        \frac{\partial \rho_t}{\partial t} = \textcolor{colorblue}{\nabla\cdot{(\nabla{V}\rho_t)}} + \textcolor{colorgreen}{\beta\nabla^2{\rho_t}},
+                        $$
+                    </div>
+                        where \(\rho_t\) is the probability density of the particles at time \(t\), \(\beta\) is the diffusion coefficient (related to the internal energy), and \(V\) is the potential energy term which causes the drift. 
                 </p>
                 <p class="abstract">
 The pioneering work of <a href="https://epubs.siam.org/doi/pdf/10.1137/S0036141096303359" target="_blank">Jordan, Kinderlehrer, and Otto</a>, related diffusion processes to energy-minimizing trajectories in the Wasserstein space(i.e., probability space endowed with the <a href="https://en.wikipedia.org/wiki/Wasserstein_metric" target="_blank">Wasserstein distance</a>).
 This modern perspective provides us with a natural discrete-time counterpart of the diffusion process, the JKO scheme,
+<div class="equation-container">
 $$
     \mu_{t+1}
     =
@@ -108,19 +113,25 @@ $$
     J(\mu) + \frac{1}{2\tau}
     W_2(\mu,\mu_t)^2,
 $$
+</div>
 where \(J:\mathcal{P}(\mathbb{R}^d)\to\mathbb{R}\cup\{+\infty\}\) is an energy functional, \(\tau>0\) is the time discretization, and \(W_2(\mu,\mu_t)^2\) is the Wasserstein distance between the current and the previous snapshot of the particles, a measure of the change in the particles' configuration. For instance, for the Fokker-Planck equation, \(J\) has the form
+<div class="equation-container">
 $$
 J(\mu) = \int_{\mathbb{R}^d} V(x)\mathrm{d}\mu(x) + \beta\int_{\mathbb{R}^d} \rho( x)\log(\rho(x))\mathrm{d} x
 \quad\text{with}\quad
 \mathrm{d}\mu(x)=\rho(x)\mathrm{d} x.
 $$
+</div>
                 </p>
                 <p class="abstract" style="margin-top: 20px;">
                     When accounting for the <em class="color-red">interaction</em> between the particles, the particles evolution becomes
+                    <div class="equation-container">
                     $$
                     \mathrm{d} X(t) = -\nabla{V}(X(t))\mathrm{d} t- \textcolor{colorred}{\int_{\mathbb{R}^d}\nabla{U}(X(t)-y)\mathrm{d}\mu_t(y)\mathrm{d} t} + \sqrt{2\beta}\mathrm{d} W(t)
                     $$
+                    </div>
                     and the energy minimized in the Wasserstein space is
+                    <div class="equation-container">
                     $$
                     J(\mu)
                     =
@@ -129,6 +140,7 @@ $$
                     \textcolor{colorred}{\int_{\mathbb{R}^d\times\mathbb{R}^d}U(x-y)\mathrm{d}(\mu\times\mu)(x,y)}
                     + \beta\int_{\mathbb{R}^d}\rho(x)\log(\rho(x))\mathrm{d} x.
                     $$
+                    </div>
                 </p>
                 <p class="abstract">
                     In this work, we seek an algorithm that from a sequence of snapshots \(\mu_1, \ldots, \mu_T\) of a diffusion process, finds the parameters \(\theta\) of the energy functional \(J_\theta\) that best explains the particles evolution.
@@ -143,19 +155,25 @@ $$
                 <p class="abstract">
                     To start, we illustrate our idea in the Euclidean case (i.e., \(\mathbb{R}^d\)) and later show that it readily generalizes to the probability space (i.e., \(\mathcal{P}(\mathbb{R}^d)\)).
 Consider the problem of learning the energy functional \(J:\mathbb{R}^d\to\mathbb{R}\cup\{+\infty\}\) of a dynamics resulting from the analog of the JKO scheme in the Euclidean space, the proximal operator
+<div class="equation-container">
 $$
     x_{t+1}
     =
     \arg\min_{x\in\mathbb{R}^d}J(x)+\frac{1}{2\tau}||{x-x_t}||^2.
 $$
+</div>
 Under sufficient regularity, we study its first-order optimality condition
+<div class="equation-container">
 $$
     \nabla J(x_{t+1})+\frac{1}{\tau}(x_{t+1}-x_t)=0.
 $$
+</div>
 If we parametrize \(J\) by \(\theta\) and seek the best \(\theta\) to explain the observed dynamics, we can minimize the loss
+<div class="equation-container">
 $$
 \mathcal{L}(\theta) = \sum_{(x_t, x_{t+1}) \in \mathcal{D}} ||\nabla J(x_{t+1})+\frac{1}{\tau}(x_{t+1}-x_t)||^2.
 $$
+</div>
                 </p>
                 <h3>Now, in the probability space</h3>
                 <img style="width:100%" src="../../projects/learning-diffusion-lightspeed/icon.pdf">                  
@@ -171,6 +189,7 @@ $$
                 </p>
                 <p class="abstract">
 In particular, when \(J\) is of the form
+<div class="equation-container">
 $$
 J(\mu)
     =
@@ -180,14 +199,18 @@ J(\mu)
     + 
     \beta\int_{\mathbb{R}^d}\rho(x)\log(\rho(x))\mathrm{d} x,
 $$
+</div>
 we can show that the first order optimality condition at every time-step \(t\)  is
+<div class="equation-container">
 $$
 0=
 \int_{\mathbb{R}^d\times\mathbb{R}^d}\Bigg\Vert\nabla{}V(x_{t+1}) 
 + \int_{\mathbb{R}^d}\!\nabla U(x_{t+1}\!-\!x_{t+1}')\mathrm{d}\mu_{t+1}(x_{t+1}') 
 + \beta \frac{\nabla{}\rho_{t+1}(x_{t+1})}{\rho_{t+1}(x_{t+1})} + \frac{1}{\tau}(x_{t+1}-x_t)\Bigg\Vert^2\mathrm{d}\gamma_t(x_t,x_{t+1}),
 $$
+</div>
 where \(\gamma_t\) is an optimal transport plan between the snapshots \(\mu_t\) and \(\mu_{t+1}\) and can be pre-computed. In particular, if we parametrize \(V, U, \beta\) with neural networks, we can find the optimal parameters \(\theta = [\theta_1^\top, \theta_2^\top, \theta_3]^\top\) minimizing the simple quadratic loss
+<div class="equation-container">
 $$
 \sum_{t=0}^{T-1}\int_{\mathbb{R}^d\times\mathbb{R}^d}\Bigg\Vert
 \nabla V(x_{t+1})
@@ -195,8 +218,10 @@ $$
 +\beta\frac{\nabla\rho_{t+1}(x_{t+1})}{\rho_{t+1}(x_{t+1})}+\frac{1}{\tau}(x_{t+1}-x_t)
 \Bigg\Vert^2\mathrm{d}\gamma_t(x_t,x_{t+1}),
 $$
+</div>
 where the gradients of \(V, U, \beta\) can be efficiently computed by automatic differentiation.
 Perhaps surprisingly, when the parametrization is linear, the optimal solution has the closed-form:
+<div class="equation-container">
 $$
 \theta^\ast=
 \frac{1}{\tau}
@@ -207,7 +232,9 @@ $$
     \sum_{t=0}^{T-1}\int_{\mathbb{R}^d\times\mathbb{R}^d} y_t(x_{t+1})(x_{t+1}-x_t)\mathrm{d}\gamma_t(x_t,x_{t+1})
 \right),
 $$
+</div>
 with 
+<div class="equation-container">
 $$
 y_t(x_t)
 =
@@ -215,6 +242,7 @@ y_t(x_t)
 \nabla\phi_1(x_{t})^\top\!, \int_{\mathbb{R}^d}\!\nabla\phi_2(x_{t}\!-\!x_{t}')^\top\mathrm{d}\mu_t(x_t'), \frac{\nabla\rho_t(x_t)}{\rho_t(x_t)}
 \end{bmatrix}^\top.
 $$
+</div>
 In practice, a regularizer term on \(\theta\) is sufficient to ensure invertibility of the matrix (see the paper for details).
                 </p>
             </div>

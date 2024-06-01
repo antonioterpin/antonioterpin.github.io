@@ -7,6 +7,12 @@ section {
     margin-top: 20px;
 }
 
+.equation-container {
+  width: 100%; /* Set the width of the container, adjust as needed */
+  overflow-x: auto; /* Enables horizontal scrolling */
+  white-space: nowrap; /* Keeps the equation in a single line */
+}
+
 .abstract {
   text-align: justify;
   /* padding: 0 2% 0 2%; */
