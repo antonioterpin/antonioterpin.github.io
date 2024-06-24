@@ -56,44 +56,46 @@
                 <h3>Problem formulation</h3>
                 <p class="abstract">
                     It is quite simple: This work considers optimization problems of the form
-$$
-\definecolor{bluetteLight}{RGB}{173,216,230}
-    \definecolor{bluetteDark}{RGB}{0,105,148} 
-    \definecolor{redLight}{RGB}{240,128,128}
-    \definecolor{redDark}{RGB}{128,0,0}
-    \definecolor{orangeLight}{RGB}{255,200,0}
-    \definecolor{orangeDark}{RGB}{255,140,0}
-    \definecolor{ETHblue}{RGB}{33,92,175}% blue
-    \definecolor{ETHpetrol}{RGB}{0,120,148}	% petrol
-    \definecolor{ETHgreen}{RGB}{98,115,19}% green
-    \definecolor{ETHbronze}{RGB}{142,103,19}% bronze
-    \definecolor{ETHred}{RGB}{183,53,45}% red
-    \definecolor{ETHpurple}{RGB}{163,7,116}	% purple
-    \definecolor{ETHgray}{RGB}{111,111,111}% gray
-    \newcommand{\varGeneric}{\mu}
-    \newcommand{\feasibleSet}{\mathcal{C}}
-    \newcommand{\reals}{\mathbb{R}}
-    \newcommand{\realsBar}{\bar{\mathbb{R}}}
-    \newcommand{\Pp}[2]{\mathcal{P}_{#1}(#2)}
-    \newcommand{\st}{\;|\;}
-    \newcommand{\norm}[1]{||#1||}
-    \newcommand{\gradient}{\nabla}
-    \newcommand{\innerProduct}[2]{\langle #1, #2 \rangle}
-    \newcommand{\varOptimal}{\mu^\ast}
-    \newcommand{\varReference}{\hat\mu}
-    \newcommand{\localZero}[1]{0_{#1}}
-    \newcommand{\subgradient}[1]{\partial{#1}}
-    \newcommand{\normalCone}[2]{\mathrm{N}_{#1}(#2)}
-    \newcommand{\wassersteinDistance}[3]{W_{#3}(#1,#2)}
-    \newcommand{\closedWassersteinBall}[3]{\mathrm{B}_{\wassersteinDistance{}{}{#3}}(#1;#2)}
-    \newcommand{\objective}{\mathcal{J}}
-    \newcommand{\expectedValue}[2]{\mathbb{E}^{#1}\left[#2\right]}
-    \inf_{\varGeneric \in \feasibleSet}\, \objective(\varGeneric),
-$$
-where \(\feasibleSet \subseteq \Pp{}{\reals^d}\) is a set of admissible <a href="https://en.wikipedia.org/wiki/Probability_measure" target="_blank">probability measures</a> and \(\objective: \Pp{}{\reals^d} \to \realsBar\) is a functional to minimize. This abstract problem setting stems from the observation that numerous fields, including machine learning, robust optimization, and biology, tackle their own version of this problem, but with ad hoc methods that often cease to be effective as soon as the problem structure deviates from idealized assumptions.
-                </p>
+                    <div class="equation-container">
+                        $$
+                        \definecolor{bluetteLight}{RGB}{173,216,230}
+                        \definecolor{bluetteDark}{RGB}{0,105,148} 
+                        \definecolor{redLight}{RGB}{240,128,128}
+                        \definecolor{redDark}{RGB}{128,0,0}
+                        \definecolor{orangeLight}{RGB}{255,200,0}
+                        \definecolor{orangeDark}{RGB}{255,140,0}
+                        \definecolor{ETHblue}{RGB}{33,92,175}% blue
+                        \definecolor{ETHpetrol}{RGB}{0,120,148}	% petrol
+                        \definecolor{ETHgreen}{RGB}{98,115,19}% green
+                        \definecolor{ETHbronze}{RGB}{142,103,19}% bronze
+                        \definecolor{ETHred}{RGB}{183,53,45}% red
+                        \definecolor{ETHpurple}{RGB}{163,7,116}	% purple
+                        \definecolor{ETHgray}{RGB}{111,111,111}% gray
+                        \newcommand{\varGeneric}{\mu}
+                        \newcommand{\feasibleSet}{\mathcal{C}}
+                        \newcommand{\reals}{\mathbb{R}}
+                        \newcommand{\realsBar}{\bar{\mathbb{R}}}
+                        \newcommand{\Pp}[2]{\mathcal{P}_{#1}(#2)}
+                        \newcommand{\st}{\;|\;}
+                        \newcommand{\norm}[1]{||#1||}
+                        \newcommand{\gradient}{\nabla}
+                        \newcommand{\innerProduct}[2]{\langle #1, #2 \rangle}
+                        \newcommand{\varOptimal}{\mu^\ast}
+                        \newcommand{\varReference}{\hat\mu}
+                        \newcommand{\localZero}[1]{0_{#1}}
+                        \newcommand{\subgradient}[1]{\partial{#1}}
+                        \newcommand{\normalCone}[2]{\mathrm{N}_{#1}(#2)}
+                        \newcommand{\wassersteinDistance}[3]{W_{#3}(#1,#2)}
+                        \newcommand{\closedWassersteinBall}[3]{\mathrm{B}_{\wassersteinDistance{}{}{#3}}(#1;#2)}
+                        \newcommand{\objective}{\mathcal{J}}
+                        \newcommand{\expectedValue}[2]{\mathbb{E}^{#1}\left[#2\right]}
+                        \inf_{\varGeneric \in \feasibleSet}\, \objective(\varGeneric),
+                        $$
+                    </div>
+                        where \(\feasibleSet \subseteq \Pp{}{\reals^d}\) is a set of admissible <a href="https://en.wikipedia.org/wiki/Probability_measure" target="_blank">probability measures</a> and \(\objective: \Pp{}{\reals^d} \to \realsBar\) is a functional to minimize. This abstract problem setting stems from the observation that numerous fields, including machine learning, robust optimization, and biology, tackle their own version of this problem, but with ad hoc methods that often cease to be effective as soon as the problem structure deviates from idealized assumptions.
+                    </p>
+                </div>
             </div>
-        </div>
     </section>
     <section>
         <div class="row justify-content-center">
@@ -104,21 +106,23 @@ where \(\feasibleSet \subseteq \Pp{}{\reals^d}\) is a set of admissible <a href=
                 </p>
                 <p class="abstract">
                     If \(\varOptimal \in \Pp{}{\reals^d}\) is an optimal solution with finite second moment and provided that a constraint qualification holds, then the ``Wasserstein subgradients'' are ``aligned'' with the constraints at ``optimality'', i.e.,
-$$
-\localZero{\varOptimal} \in \subgradient{\objective}(\varOptimal) + \normalCone{\feasibleSet}{\varOptimal},
-$$
-where \(\subgradient{\objective}(\varOptimal)\) is the ``Wasserstein subgradient'' of \(\objective\) at \(\varOptimal\), \(\normalCone{\feasibleSet}{\varOptimal}\) is the ``Wasserstein normal cone'' of \(\feasibleSet\) at \(\varOptimal\) and \(\localZero{\varOptimal}\) is a ``null Wasserstein tangent vector'' at \(\varOptimal\).
-                </p>
-                <p class="abstract">
-                    To get some intuition, let's consider the following two pictures.
-                </p>
-                <div class="row justify-content-center">
-                    <div class="col-12 col-md-6 justify-content-center">
-                        <img src="./imgs/fig_gradients_aligned_optimality/1.pdf" style="width: 90%;">
+                    <div class="equation-container">
+                        $$
+                        \localZero{\varOptimal} \in \subgradient{\objective}(\varOptimal) + \normalCone{\feasibleSet}{\varOptimal},
+                        $$
                     </div>
-                    <div class="col-12 col-md-6 justify-content-center">
-                        <img src="./imgs/fig_gradients_aligned_optimality/2.pdf" style="width: 90%;">
-                    </div>
+                        where \(\subgradient{\objective}(\varOptimal)\) is the ``Wasserstein subgradient'' of \(\objective\) at \(\varOptimal\), \(\normalCone{\feasibleSet}{\varOptimal}\) is the ``Wasserstein normal cone'' of \(\feasibleSet\) at \(\varOptimal\) and \(\localZero{\varOptimal}\) is a ``null Wasserstein tangent vector'' at \(\varOptimal\).
+                    </p>
+                    <p class="abstract">
+                        To get some intuition, let's consider the following two pictures.
+                    </p>
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-6 justify-content-center">
+                            <img src="./imgs/fig_gradients_aligned_optimality/1.pdf" style="width: 90%;">
+                        </div>
+                        <div class="col-12 col-md-6 justify-content-center">
+                            <img src="./imgs/fig_gradients_aligned_optimality/2.pdf" style="width: 90%;">
+                        </div>
                 </div>
                 <p class="abstract" style="margin-top: 20px;">
                     The figure on the left depicts two empirical candidate solutions 
@@ -142,11 +146,13 @@ where \(\subgradient{\objective}(\varOptimal)\) is the ``Wasserstein subgradient
                 <p class="abstract">
                     we illustrate our optimality conditions by informally studying a simple and accessible version of the general optimization problem.
 For \(\theta \neq 0\) and \(\varepsilon > 0\), consider the problem
-$$
+<div class="equation-container">
+    $$
     \inf_{\varGeneric \in \Pp{2}{\reals^d}}\; \expectedValue{x \sim \varGeneric}{\innerProduct{\theta}{x}}
     \qquad\text{subject to}\qquad
     \expectedValue{x \sim \varGeneric}{\norm{x}^2} \leq \varepsilon^2,
-$$
+    $$
+</div>
 depicted in the figure above on the left for \(\theta = \begin{bmatrix}
     1 & 1
 \end{bmatrix}^\top\).
@@ -157,18 +163,22 @@ To get some intuition, let us restrict to <a href="https://en.wikipedia.org/wiki
 This optimization problem can be studied through standard first-order optimality conditions in <a href="https://en.wikipedia.org/wiki/Euclidean_space" target="_blank">Euclidean spaces</a>. 
 Since the gradient of the objective \(\gradient{x}{\innerProduct{\theta}{x}} = \theta\) never vanishes, the optimal solution (if it exists) lies at the <a href="https://en.wikipedia.org/wiki/Boundary_(topology)">boundary</a>.
 We thus seek the <a href="https://en.wikipedia.org/wiki/Lagrange_multiplier" target="_blank">Lagrange multiplier</a> \(\lambda > 0\) such that
-$$
+<div class="equation-container">
+    $$
     0 = \gradient{x}{\innerProduct{\theta}{x}} + \lambda\gradient{x}{\norm{x}^2} = \theta + 2\lambda x
     \quad\text{and}\quad
     \varepsilon^2 = \norm{x}^2,
-$$
+    $$
+</div>
 which yields \(x = -\varepsilon\frac{\theta}{\norm{\theta}}\) and \(\lambda = \frac{\norm{\theta}}{2\varepsilon}\).
 Now back to the problem in probability spaces: After basic algebraic manipulations, our main result (stated informally above) tells us that any solution \(\varOptimal \in \Pp{2}{\reals^d}\) satisfies the Lagrange-like condition
-$$
-0 = 2\lambda x + \theta\quad\varOptimal-\text{a.e.}
-\quad\text{and}\quad
-\varepsilon^2 = \expectedValue{x \sim \varOptimal}{\norm{x}^2} = \frac{\norm{\theta}^2}{4\lambda^2},
-$$
+<div class="equation-container">
+    $$
+    0 = 2\lambda x + \theta\quad\varOptimal-\text{a.e.}
+    \quad\text{and}\quad
+    \varepsilon^2 = \expectedValue{x \sim \varOptimal}{\norm{x}^2} = \frac{\norm{\theta}^2}{4\lambda^2},
+    $$
+</div>
 for some \(\lambda \geq 0\) constant across the <a href="https://en.wikipedia.org/wiki/Support_(measure_theory)" target="_blank">support</a> of \(\varOptimal\); cf. the figure above on the left for \(\theta = \begin{bmatrix}
     1 & 1
 \end{bmatrix}^\top\).
