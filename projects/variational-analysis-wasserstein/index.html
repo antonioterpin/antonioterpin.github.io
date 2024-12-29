@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/extra.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <title>Variational Analysis in the Wasserstein Space</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mt-4">
+        <h1 class="paperpage-title">Variational Analysis in the Wasserstein Space</h1>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-2">
+                <a target="_blank" href="http://people.ee.ethz.ch/~lnicolas/index.html" class="author">Nicolas Lanzetti*</a>
+            </div>
+            <div class="col-12 col-md-2">
+                <a target="_blank" href="https://www.antonioterpin.com" class="author">Antonio Terpin*</a>
+            </div>
+            <div class="col-12 col-md-2">
+                <a target="_blank" href="http://people.ee.ethz.ch/~floriand" class="author">Florian Dörfler</a>
+            </div>
+        </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-2">
+            <img style="width: 100%" class="eth-logo" src="../../media/eth.png">
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6 text-center">
+            <button class="col button" onclick="window.open('https://arxiv.org/abs/2406.10676')"><i class="fa fa-file-pdf-o"></i> Paper</button>
+        <!-- <button class="col button" onclick="window.open('')"><i class="fa fa-video-camera"></i> Video</button> -->
+        <button class="col button" onclick="window.open('https://x.com/antonio_terpin/status/1803019603741741158')"><i class="fa fa-twitter"></i> Tweet</button>
+                </div>
+        </div>
+        <section>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8">
+                <h3>Project description</h3>
+                <p class="abstract">
+                We study optimization problems whereby the optimization variable is a probability measure. Since the probability space is not a vector space, many classical and powerful methods for optimization (e.g., gradients) are of little help. Thus, one typically resorts to the abstract machinery of infinite-dimensional analysis or other ad-hoc methodologies - not tailored to the probability space - which however involve projections or rely on convexity-type assumptions. We believe instead that these problems call for a comprehensive methodological framework for calculus in probability spaces. In this work, we combine ideas from optimal transport, variational analysis, and Wasserstein gradient flows to equip the Wasserstein space (i.e., the space of probability measures endowed with the Wasserstein distance) with a variational structure, both by combining and extending existing results and introducing novel tools. Our theoretical analysis culminates in very general necessary optimality conditions for optimality. Notably, our conditions (i) resemble the rationales of Euclidean spaces, such as the Karush-Kuhn-Tucker and Lagrange conditions, (ii) are intuitive, informative, and easy to study, and (iii) they provide either closed form solutions or computationally attractive algorithms. We believe this framework lays the foundation for new algorithmic and theoretical advancements in the study of optimization problems in probability spaces, which we exemplify with numerous case studies and applications to machine learning, drug discovery, and distributionally robust optimization.
+                </p>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <h3>Problem formulation</h3>
+                <p class="abstract">
+                    It is quite simple: This work considers optimization problems of the form
+                    <div class="equation-container">
+                        $$
+                        \definecolor{bluetteLight}{RGB}{173,216,230}
+                        \definecolor{bluetteDark}{RGB}{0,105,148} 
+                        \definecolor{redLight}{RGB}{240,128,128}
+                        \definecolor{redDark}{RGB}{128,0,0}
+                        \definecolor{orangeLight}{RGB}{255,200,0}
+                        \definecolor{orangeDark}{RGB}{255,140,0}
+                        \definecolor{ETHblue}{RGB}{33,92,175}% blue
+                        \definecolor{ETHpetrol}{RGB}{0,120,148}	% petrol
+                        \definecolor{ETHgreen}{RGB}{98,115,19}% green
+                        \definecolor{ETHbronze}{RGB}{142,103,19}% bronze
+                        \definecolor{ETHred}{RGB}{183,53,45}% red
+                        \definecolor{ETHpurple}{RGB}{163,7,116}	% purple
+                        \definecolor{ETHgray}{RGB}{111,111,111}% gray
+                        \newcommand{\varGeneric}{\mu}
+                        \newcommand{\feasibleSet}{\mathcal{C}}
+                        \newcommand{\reals}{\mathbb{R}}
+                        \newcommand{\realsBar}{\bar{\mathbb{R}}}
+                        \newcommand{\Pp}[2]{\mathcal{P}_{#1}(#2)}
+                        \newcommand{\st}{\;|\;}
+                        \newcommand{\norm}[1]{||#1||}
+                        \newcommand{\gradient}{\nabla}
+                        \newcommand{\innerProduct}[2]{\langle #1, #2 \rangle}
+                        \newcommand{\varOptimal}{\mu^\ast}
+                        \newcommand{\varReference}{\hat\mu}
+                        \newcommand{\localZero}[1]{0_{#1}}
+                        \newcommand{\subgradient}[1]{\partial{#1}}
+                        \newcommand{\normalCone}[2]{\mathrm{N}_{#1}(#2)}
+                        \newcommand{\wassersteinDistance}[3]{W_{#3}(#1,#2)}
+                        \newcommand{\closedWassersteinBall}[3]{\mathrm{B}_{\wassersteinDistance{}{}{#3}}(#1;#2)}
+                        \newcommand{\objective}{\mathcal{J}}
+                        \newcommand{\expectedValue}[2]{\mathbb{E}^{#1}\left[#2\right]}
+                        \inf_{\varGeneric \in \feasibleSet}\, \objective(\varGeneric),
+                        $$
+                    </div>
+                        where \(\feasibleSet \subseteq \Pp{}{\reals^d}\) is a set of admissible <a href="https://en.wikipedia.org/wiki/Probability_measure" target="_blank">probability measures</a> and \(\objective: \Pp{}{\reals^d} \to \realsBar\) is a functional to minimize. This abstract problem setting stems from the observation that numerous fields, including machine learning, robust optimization, and biology, tackle their own version of this problem, but with ad hoc methods that often cease to be effective as soon as the problem structure deviates from idealized assumptions.
+                    </p>
+                </div>
+            </div>
+    </section>
+    <section>
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <h3>Main result: Gradients are aligned with the constraints at optimality</h3>
+                <p class="abstract">
+                    Our main result are general first-order optimality conditions for the optimization problem above:
+                </p>
+                <p class="abstract">
+                    If \(\varOptimal \in \Pp{}{\reals^d}\) is an optimal solution with finite second moment and provided that a constraint qualification holds, then the ``Wasserstein subgradients'' are ``aligned'' with the constraints at ``optimality'', i.e.,
+                    <div class="equation-container">
+                        $$
+                        \localZero{\varOptimal} \in \subgradient{\objective}(\varOptimal) + \normalCone{\feasibleSet}{\varOptimal},
+                        $$
+                    </div>
+                        where \(\subgradient{\objective}(\varOptimal)\) is the ``Wasserstein subgradient'' of \(\objective\) at \(\varOptimal\), \(\normalCone{\feasibleSet}{\varOptimal}\) is the ``Wasserstein normal cone'' of \(\feasibleSet\) at \(\varOptimal\) and \(\localZero{\varOptimal}\) is a ``null Wasserstein tangent vector'' at \(\varOptimal\).
+                    </p>
+                    <p class="abstract">
+                        To get some intuition, let's consider the following two pictures.
+                    </p>
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-6 justify-content-center">
+                            <img src="./imgs/fig_gradients_aligned_optimality/1.pdf" style="width: 90%;">
+                        </div>
+                        <div class="col-12 col-md-6 justify-content-center">
+                            <img src="./imgs/fig_gradients_aligned_optimality/2.pdf" style="width: 90%;">
+                        </div>
+                </div>
+                <p class="abstract" style="margin-top: 20px;">
+                    The figure on the left depicts two empirical candidate solutions 
+                    \(
+                    \textcolor{blue}{\varGeneric_1}\) and \(\textcolor{orangeDark}{\varGeneric_2}\) for the generic optimization problem with \(\feasibleSet = \{\varGeneric\in\Pp{2}{\reals^2}\st\expectedValue{(x_1, x_2)\sim\varGeneric}{x_1^2+x_2^2}\leq \varepsilon^2\}\) (i.e., bounded second moment) and \(\objective(\varGeneric) = \expectedValue{(x_1, x_2) \sim \textcolor{blue}{\varGeneric}}{x_1+x_2}\), of which we show the contours and the gradient vector field.
+                    The solid (resp., dashed) black arrows represent the gradient of the constraint function \(\expectedValue{(x_1, x_2)\sim\varGeneric}{x_1^2+x_2^2}- \varepsilon^2\) at \(\textcolor{blue}{\varGeneric_1}\) (resp., \(\textcolor{orangeDark}{\varGeneric_2}\)).
+                    Here, \(\textcolor{blue}{\varGeneric_1}\) is indeed a candidate optimal solution: The gradient of the objective is aligned with the gradient of the constraint.
+                    For \(\textcolor{orangeDark}{\varGeneric_2}\), instead, these two are not aligned. Thus, \(\textcolor{orangeDark}{\varGeneric_2}\) cannot be optimal. 
+                </p>
+                <p class="abstract">
+                    The figure on the right shows that \(\textcolor{blue}{\varOptimal}\) satisfies the optimality condition for the generic optimization problem with \(\feasibleSet = \closedWassersteinBall{\textcolor{red}{\varReference}}{\varepsilon}{2}=\{\varGeneric\in\Pp{2}{\reals^2}\st\wassersteinDistance{\varGeneric}{\textcolor{red}{\varReference}}{2}\leq\varepsilon\}\) (i.e., Wasserstein ball centered at \(\textcolor{red}{\varReference}\) of radius \(\varepsilon)\) and \(\objective(\varGeneric) = \expectedValue{(x_1, x_2) \sim \varGeneric}{x_1 + x_2}\), of which the contours and the gradient vector field are shown. The black arrows connecting \(\textcolor{red}{\varReference}\) and \(\textcolor{blue}{\varOptimal}\) represent the gradient of the constraint function \(\wassersteinDistance{\textcolor{blue}{\varGeneric}}{\textcolor{red}{\varReference}}{2}^2-\varepsilon^2\).
+                    Since \(\textcolor{blue}{\varOptimal}\) is optimal, the gradient of the objective and the constraint are aligned at all the "particles" of \(\textcolor{blue}{\varOptimal}\).
+                </p>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <h3>Are these conditions hard to use?</h3>
+                <p class="abstract">
+                    we illustrate our optimality conditions by informally studying a simple and accessible version of the general optimization problem.
+For \(\theta \neq 0\) and \(\varepsilon > 0\), consider the problem
+<div class="equation-container">
+    $$
+    \inf_{\varGeneric \in \Pp{2}{\reals^d}}\; \expectedValue{x \sim \varGeneric}{\innerProduct{\theta}{x}}
+    \qquad\text{subject to}\qquad
+    \expectedValue{x \sim \varGeneric}{\norm{x}^2} \leq \varepsilon^2,
+    $$
+</div>
+depicted in the figure above on the left for \(\theta = \begin{bmatrix}
+    1 & 1
+\end{bmatrix}^\top\).
+To get some intuition, let us restrict to <a href="https://en.wikipedia.org/wiki/Dirac_measure" target="_blank">Dirac's delta</a> of the form \(\delta_x\) for \(x\in\reals^d\). Accordingly, the optimization problem reduces to
+\(
+    \inf_{\norm{x}^2 \leq \varepsilon^2} \innerProduct{\theta}{x}.
+\)
+This optimization problem can be studied through standard first-order optimality conditions in <a href="https://en.wikipedia.org/wiki/Euclidean_space" target="_blank">Euclidean spaces</a>. 
+Since the gradient of the objective \(\gradient{x}{\innerProduct{\theta}{x}} = \theta\) never vanishes, the optimal solution (if it exists) lies at the <a href="https://en.wikipedia.org/wiki/Boundary_(topology)">boundary</a>.
+We thus seek the <a href="https://en.wikipedia.org/wiki/Lagrange_multiplier" target="_blank">Lagrange multiplier</a> \(\lambda > 0\) such that
+<div class="equation-container">
+    $$
+    0 = \gradient{x}{\innerProduct{\theta}{x}} + \lambda\gradient{x}{\norm{x}^2} = \theta + 2\lambda x
+    \quad\text{and}\quad
+    \varepsilon^2 = \norm{x}^2,
+    $$
+</div>
+which yields \(x = -\varepsilon\frac{\theta}{\norm{\theta}}\) and \(\lambda = \frac{\norm{\theta}}{2\varepsilon}\).
+Now back to the problem in probability spaces: After basic algebraic manipulations, our main result (stated informally above) tells us that any solution \(\varOptimal \in \Pp{2}{\reals^d}\) satisfies the Lagrange-like condition
+<div class="equation-container">
+    $$
+    0 = 2\lambda x + \theta\quad\varOptimal-\text{a.e.}
+    \quad\text{and}\quad
+    \varepsilon^2 = \expectedValue{x \sim \varOptimal}{\norm{x}^2} = \frac{\norm{\theta}^2}{4\lambda^2},
+    $$
+</div>
+for some \(\lambda \geq 0\) constant across the <a href="https://en.wikipedia.org/wiki/Support_(measure_theory)" target="_blank">support</a> of \(\varOptimal\); cf. the figure above on the left for \(\theta = \begin{bmatrix}
+    1 & 1
+\end{bmatrix}^\top\).
+We conclude that the mass of any candidate solution is necessarily located at \(-\varepsilon\frac{\theta}{\norm{\theta}}\).
+In particular, our optimality condition in mirrors its counterpart on \(\reals^d\).
+                </p>
+                <p class="abstract">
+                    For more examples and applications, check out the paper!
+                </p>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="row justify-content-center">
+            <div class="col-8 text-center">
+                <h2>Team</h2>
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-4">
+                        <div class="row justify-content-center">
+                            <div class="col-12">
+                                <img src="../../media/people/nicolas.png" class="rounded" alt="Nicolas Lanzetti">
+                            </div>
+                            <div class="col-12">
+                                <a target="_blank" href="http://people.ee.ethz.ch/~lnicolas/index.html"  class="team-name">Nicolas Lanzetti</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <img src="../../media/people/me.jpeg" class="rounded" alt="Antonio Terpin">
+                    </div>
+                    <div class="col-12">
+                        <a target="_blank" href="https://www.antonioterpin.com" class="team-name">Antonio Terpin</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <img src="../../media/people/florian.jpg" class="rounded" alt="Florian Dörfler">
+                    </div>
+                    <div class="col-12">
+                        <a target="_blank" href="http://people.ee.ethz.ch/~floriand" class="team-name">Florian Dörfler</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </section>
+        <section>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 text-start">
+                <h3>Bibtex</h3>
+                <pre class="bibtex-container">
+@article{lanzetti2024variational,
+    author = {Lanzetti, Nicolas and Terpin, Antonio and D\"orfler, Florian},
+    title = {Variational Analysis in the Wasserstein Space},
+    journal={arXiv preprint arXiv:2406.10676}
+    year = {2024}
+}</pre>
+            </div>
+        </div>
+    </section>
+    </div>
+</body>
+</html>
