@@ -83,30 +83,16 @@ section {
 }
 
 .pdesc ul {
-  padding-left: 7em;
+  padding-left: 9em;
 }
 
 .pend {
   clear: both;
 }
 .pico img {
-  height: 80px;
+  width: 120px;
   border-radius: 5px;
   border: 1px solid #999;
-}
-
-.project-icon {
-    width: 88px;
-    height: 88px;
-    overflow: hidden;
-    display: inline-block;
-}
-
-.project-icon img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* this does the magic */
-  object-position: center; /* adjust as needed */
 }
 
 img.rounded {
@@ -130,14 +116,6 @@ img.rounded {
     text-align: center;
     font-family: Optima;
     font-size: 12pt;
-  }
-  
-  .boxabstract {
-    width: 100%;
-    padding: 5px 5px;
-    text-align: justify;
-    background-color: Gainsboro;
-    margin-top: 10px;
   }
 
   .post-entry {
@@ -178,4 +156,14 @@ img.rounded {
 
 #dynamic-content {
   text-align: left;
+}
+
+.highlight {
+    background-color: hwb(30 96% 0%);   /* light blue */
+    padding: 4px 8px;            /* optional: gives it some breathing room */
+    border-radius: 4px;          /* optional: slightly rounded corners */
+}
+
+.highlight .button {
+    background-color: transparent;
 }
