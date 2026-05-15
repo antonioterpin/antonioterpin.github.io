@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { petProjects } from "../data/pet-projects";
+---
+
+<BaseLayout
+  title="Pet projects"
+  description="Side projects, tools, and experiments by Antonio Terpin."
+>
+  <section class="shell pt-10 md:pt-14 pb-6">
+    <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Pet projects" }]} />
+  </section>
+
+  <section class="shell pb-8">
+    <div class="max-w-2xl">
+      <h1 class="display text-4xl md:text-5xl text-[color:var(--color-ink)]">Pet projects.</h1>
+      <p class="mt-4 text-lg text-[color:var(--color-ink-2)] leading-relaxed">
+        Things I've built for fun or to learn, a non-exhaustive list.
+      </p>
+    </div>
+  </section>
+
+  <section class="shell pb-12">
+    <ul class="list-disc pl-5 space-y-2 text-[15px] text-[color:var(--color-ink-2)] leading-relaxed marker:text-[color:var(--color-muted)]">
+      {petProjects.map((p) => (
+        <li>
+          <span class="text-[color:var(--color-ink)] font-medium">{p.title}.</span>
+          <span class="inline-links">
+            {" "}<Fragment set:html={p.description} />
+          </span>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>

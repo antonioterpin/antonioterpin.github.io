@@ -1,0 +1,132 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import { books, readingPicks } from "../data/bookshelf";
+import { essays, podcasts, courses } from "../data/bookmarks";
+---
+
+<BaseLayout
+  title="Bookshelf"
+  description="Books, essays, and other reading by Antonio Terpin."
+>
+  <section class="shell pt-10 md:pt-14 pb-6">
+    <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Bookshelf" }]} />
+  </section>
+
+  <section class="shell pb-12">
+    <div class="max-w-2xl">
+      <h1 class="display text-4xl md:text-5xl text-[color:var(--color-ink)]">Bookshelf.</h1>
+      <p class="mt-4 text-lg text-[color:var(--color-ink-2)] leading-relaxed">
+        Reading is one of the best things you can do. I haven't read all of
+        these — favourites are in <span class="text-[color:var(--color-accent)]"
+          >accent colour</span
+        >. They are listed in no particular order.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="shell pb-10 md:pb-12">
+      <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-1.5 text-[15px]">
+        {books.map((b) => (
+          <li
+            class={b.favourite
+              ? "text-[color:var(--color-accent)] font-medium"
+              : "text-[color:var(--color-ink-2)]"}
+          >
+            {b.title}
+          </li>
+        ))}
+        <li class="text-[color:var(--color-muted)] italic">… more soon.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="reading-picks" class="rule scroll-mt-24">
+    <div class="shell py-12 md:py-16">
+      <SectionHeader title="Reading picks, by year." />
+      <ul class="grid gap-5">
+        {readingPicks.map((r) => (
+          <li class="border border-[color:var(--color-line)] rounded-sm p-5 bg-[color:var(--color-paper)]">
+            <div class="text-xs font-mono text-[color:var(--color-muted)] uppercase tracking-wider mb-2">
+              {r.year}
+            </div>
+            <p class="text-[15px] text-[color:var(--color-ink-2)] leading-relaxed">
+              {r.text}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="rule">
+    <div class="shell py-12 md:py-16">
+      <SectionHeader title="Bookmarks." />
+      <div class="grid md:grid-cols-3 gap-8">
+        <div>
+          <div class="text-xs font-mono uppercase tracking-wider text-[color:var(--color-muted)] mb-3">
+            Essays &amp; writers
+          </div>
+          <ul class="space-y-1.5 text-[15px]">
+            {essays.map((e) => (
+              <li>
+                <a
+                  href={e.href}
+                  target="_blank"
+                  rel="noopener"
+                  class="text-[color:var(--color-accent)] hover:text-[color:var(--color-ink)]"
+                >
+                  {e.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <div class="text-xs font-mono uppercase tracking-wider text-[color:var(--color-muted)] mb-3">
+            Podcasts
+          </div>
+          <ul class="space-y-1.5 text-[15px]">
+            {podcasts.map((e) => (
+              <li>
+                <a
+                  href={e.href}
+                  target="_blank"
+                  rel="noopener"
+                  class="text-[color:var(--color-accent)] hover:text-[color:var(--color-ink)]"
+                >
+                  {e.label}
+                </a>
+              </li>
+            ))}
+            <li class="text-[color:var(--color-muted)] italic">
+              … but I rarely listen to podcasts/music nowadays — I prefer
+              thinking/doing nothing.
+            </li>
+          </ul>
+        </div>
+        <div>
+          <div class="text-xs font-mono uppercase tracking-wider text-[color:var(--color-muted)] mb-3">
+            Courses &amp; material
+          </div>
+          <ul class="space-y-1.5 text-[15px]">
+            {courses.map((e) => (
+              <li>
+                <a
+                  href={e.href}
+                  target="_blank"
+                  rel="noopener"
+                  class="text-[color:var(--color-accent)] hover:text-[color:var(--color-ink)]"
+                >
+                  {e.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

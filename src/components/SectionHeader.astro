@@ -1,0 +1,37 @@
+---
+interface Props {
+  title: string;
+  cta?: { href: string; label: string };
+  align?: "left" | "center";
+}
+
+const { title, cta, align = "left" } = Astro.props;
+---
+
+<header
+  class:list={[
+    "mb-10",
+    align === "center" ? "text-center mx-auto max-w-2xl" : "",
+  ]}
+>
+  <div class="flex items-end justify-between gap-6 flex-wrap">
+    <div class="max-w-2xl">
+      <h2
+        class="display text-3xl sm:text-4xl text-[color:var(--color-ink)]"
+      >
+        {title}
+      </h2>
+    </div>
+    {
+      cta && (
+        <a
+          href={cta.href}
+          class="text-sm text-[color:var(--color-accent)] hover:text-[color:var(--color-ink)] transition-colors inline-flex items-center gap-1"
+        >
+          {cta.label}
+          <span aria-hidden="true">→</span>
+        </a>
+      )
+    }
+  </div>
+</header>

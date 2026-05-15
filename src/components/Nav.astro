@@ -1,0 +1,95 @@
+---
+const pathname = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/");
+
+const items = [
+  { href: "/#about", label: "About" },
+  { href: "/research", label: "Research" },
+  { href: "/teaching", label: "Teaching" },
+  { href: "/experience", label: "Experience" },
+  { href: "/awards", label: "Awards" },
+  { href: "/pet-projects", label: "Pet projects" },
+  { href: "/bookshelf", label: "Bookshelf" },
+];
+---
+
+<header
+  class="sticky top-0 z-40 border-b border-[color:var(--color-line)] bg-[color:var(--color-paper)]/85 backdrop-blur"
+>
+  <div class="shell flex items-center justify-between h-16 gap-6">
+    <a href="/" class="flex items-center gap-3 group">
+      <span class="font-display font-semibold tracking-tight text-[color:var(--color-ink)]">
+        Antonio Terpin
+      </span>
+    </a>
+    <nav aria-label="Primary" class="hidden md:block">
+      <ul class="flex items-center gap-5 text-sm">
+        {
+          items.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isActive(item.href) ? "page" : undefined}
+                class:list={[
+                  "transition-colors hover:text-[color:var(--color-accent)]",
+                  isActive(item.href)
+                    ? "text-[color:var(--color-ink)] font-medium"
+                    : "text-[color:var(--color-muted)]",
+                ]}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <details class="md:hidden relative">
+      <summary
+        class="list-none cursor-pointer p-2 -mr-2 text-[color:var(--color-ink)] select-none"
+        aria-label="Menu"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+        >
+          <line x1="4" y1="7" x2="20" y2="7"></line>
+          <line x1="4" y1="12" x2="20" y2="12"></line>
+          <line x1="4" y1="17" x2="20" y2="17"></line>
+        </svg>
+      </summary>
+      <nav
+        aria-label="Mobile"
+        class="absolute right-0 top-full mt-2 w-56 rounded-md border border-[color:var(--color-line)] bg-[color:var(--color-paper)] shadow-lg"
+      >
+        <ul class="py-2 text-sm">
+          {
+            items.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  aria-current={isActive(item.href) ? "page" : undefined}
+                  class:list={[
+                    "block px-4 py-2 hover:bg-[color:var(--color-paper-2)]",
+                    isActive(item.href)
+                      ? "text-[color:var(--color-ink)] font-medium"
+                      : "text-[color:var(--color-muted)]",
+                  ]}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>

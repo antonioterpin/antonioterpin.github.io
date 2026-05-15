@@ -1,0 +1,59 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-24 border-t border-[color:var(--color-line)] bg-[color:var(--color-paper-2)]">
+  <div class="shell py-12 grid gap-10 md:grid-cols-2 text-sm">
+    <div>
+      <div class="text-[color:var(--color-ink)] font-medium">Explore</div>
+      <ul class="mt-2 space-y-1 text-[color:var(--color-muted)]">
+        <li><a class="hover:text-[color:var(--color-accent)]" href="/research">Research</a></li>
+        <li><a class="hover:text-[color:var(--color-accent)]" href="/teaching">Teaching</a></li>
+        <li><a class="hover:text-[color:var(--color-accent)]" href="/awards">Awards &amp; talks</a></li>
+        <li><a class="hover:text-[color:var(--color-accent)]" href="/pet-projects">Pet projects</a></li>
+        <li><a class="hover:text-[color:var(--color-accent)]" href="/bookshelf">Bookshelf</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="text-[color:var(--color-ink)] font-medium">Elsewhere</div>
+      <ul class="mt-2 space-y-1 text-[color:var(--color-muted)]">
+        <li>
+          <a
+            class="hover:text-[color:var(--color-accent)]"
+            href="https://activefluidcontrol.com"
+            rel="noopener"
+            target="_blank"
+            >Active Fluid Control</a
+          >
+        </li>
+        <li>
+          <a
+            class="hover:text-[color:var(--color-accent)]"
+            href="https://scholar.google.com/citations?hl=en&user=IFx4XfoAAAAJ"
+            rel="noopener"
+            target="_blank"
+            >Google Scholar</a
+          >
+        </li>
+        <li>
+          <a
+            class="hover:text-[color:var(--color-accent)]"
+            href="https://github.com/antonioterpin"
+            rel="noopener"
+            target="_blank"
+            >GitHub</a
+          >
+        </li>
+        <li>
+          <a class="hover:text-[color:var(--color-accent)]" href="mailto:aterpin@ethz.ch"
+            >aterpin@ethz.ch</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="shell pb-8 flex items-center justify-between text-xs text-[color:var(--color-muted)]">
+    <div>© {year} Antonio Terpin.</div>
+    <div class="hidden sm:block">Built with Astro.</div>
+  </div>
+</footer>

@@ -1,0 +1,98 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import PublicationCard from "../components/PublicationCard.astro";
+import { publications, themes, type Theme } from "../data/publications";
+import { patents } from "../data/patents";
+
+const themeOrder: Theme[] = [
+  "active-fluid-control",
+  "ai-for-science",
+  "optimization-control",
+];
+
+const byTheme = themeOrder.map((t) => ({
+  theme: t,
+  meta: themes[t],
+  items: publications
+    .filter((p) => p.theme === t)
+    .sort(
+      (a, b) =>
+        Number(b.featured ?? false) - Number(a.featured ?? false) ||
+        b.year - a.year
+    ),
+}));
+---
+
+<BaseLayout
+  title="Research"
+  description="Publications, preprints, and patents by Antonio Terpin."
+>
+  <section class="shell pt-10 md:pt-14 pb-6">
+    <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Research" }]} />
+  </section>
+
+  <section class="shell pb-8">
+    <h1 class="display text-4xl md:text-5xl text-[color:var(--color-ink)]">Research.</h1>
+  </section>
+
+  {byTheme.map(({ theme, meta, items }) => (
+    <section id={theme} class="shell pb-10 scroll-mt-24">
+      <h2 class="display text-xl text-[color:var(--color-ink)] mb-4 mt-2">{meta.label}</h2>
+      <ul class="divide-y divide-[color:var(--color-line)] border-t border-[color:var(--color-line)]">
+        {items.map((p) => (
+          <li id={p.id} class="py-4">
+            <PublicationCard
+              title={p.title}
+              authors={p.authors}
+              year={p.year}
+              venue={p.venue}
+              honors={p.honors}
+              status={p.status}
+              teaser={p.teaser}
+              arxiv={p.arxiv}
+              pdf={p.pdf}
+              code={p.code}
+              website={p.website}
+              websiteLabel={p.websiteLabel}
+              video={p.video}
+              featured={p.featured}
+            />
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+
+  <section id="patents" class="shell pb-12 scroll-mt-24">
+    <h2 class="display text-xl text-[color:var(--color-ink)] mb-4 mt-2">Patents</h2>
+    <ul class="list-disc pl-5 space-y-1.5 text-[15px] text-[color:var(--color-ink-2)] leading-relaxed marker:text-[color:var(--color-muted)]">
+      {patents.map((p) => (
+        <li>
+          <span class="text-[color:var(--color-muted)]">{p.year}</span>
+          {" — "}
+          <a
+            href={p.url}
+            target="_blank"
+            rel="noopener"
+            class="text-[color:var(--color-ink)] hover:text-[color:var(--color-accent)] underline underline-offset-2 decoration-[color:var(--color-line-2)] hover:decoration-[color:var(--color-accent)]"
+          >
+            {p.title}
+          </a>
+          <span class="text-[color:var(--color-muted)]">{` (${p.jurisdiction}).`}</span>
+        </li>
+      ))}
+    </ul>
+    <p class="mt-6 text-[13px] text-[color:var(--color-muted)]">
+      *equal contribution. I also contributed to the{" "}
+      <a
+        href="https://agi.safe.ai"
+        target="_blank"
+        rel="noopener"
+        class="underline underline-offset-2 hover:text-[color:var(--color-accent)]"
+        >Humanity's Last Exam</a
+      >{" "}
+      dataset.
+    </p>
+  </section>
+</BaseLayout>

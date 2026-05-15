@@ -1,0 +1,73 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { awards, talks } from "../data/awards";
+---
+
+<BaseLayout
+  title="Awards & talks"
+  description="Awards, honors, and selected talks by Antonio Terpin."
+>
+  <section class="shell pt-10 md:pt-14 pb-6">
+    <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Awards & talks" }]} />
+  </section>
+
+  <section class="shell pb-8">
+    <div class="max-w-2xl">
+      <h1 class="display text-4xl md:text-5xl text-[color:var(--color-ink)]">Awards &amp; talks.</h1>
+    </div>
+  </section>
+
+  <section id="awards" class="shell pb-8 scroll-mt-24">
+    <h2 class="display text-xl text-[color:var(--color-ink)] mb-3">Awards</h2>
+    <ul class="list-disc pl-5 space-y-1.5 text-[15px] text-[color:var(--color-ink-2)] leading-relaxed marker:text-[color:var(--color-muted)]">
+      {awards.map((a) => (
+        <li>
+          <span class="text-[color:var(--color-muted)]">{a.year}</span>
+          {" — "}
+          {a.url ? (
+            <a
+              href={a.url}
+              target="_blank"
+              rel="noopener"
+              class="text-[color:var(--color-ink)] hover:text-[color:var(--color-accent)] underline underline-offset-2 decoration-[color:var(--color-line-2)] hover:decoration-[color:var(--color-accent)]"
+            >
+              {a.title}
+            </a>
+          ) : (
+            <span class="text-[color:var(--color-ink)]">{a.title}</span>
+          )}
+          {a.description && (
+            <span class="inline-links">
+              {". "}<Fragment set:html={a.description} />
+            </span>
+          )}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section id="talks" class="shell pb-12 scroll-mt-24">
+    <h2 class="display text-xl text-[color:var(--color-ink)] mb-3 mt-4">Selected talks</h2>
+    <ul class="list-disc pl-5 space-y-1.5 text-[15px] text-[color:var(--color-ink-2)] leading-relaxed marker:text-[color:var(--color-muted)]">
+      {talks.map((t) => (
+        <li>
+          <span class="text-[color:var(--color-muted)]">{t.year}</span>
+          {" — "}
+          {t.url ? (
+            <a
+              href={t.url}
+              target="_blank"
+              rel="noopener"
+              class="text-[color:var(--color-ink)] hover:text-[color:var(--color-accent)] underline underline-offset-2 decoration-[color:var(--color-line-2)] hover:decoration-[color:var(--color-accent)]"
+            >
+              {t.title}
+            </a>
+          ) : (
+            <span class="text-[color:var(--color-ink)]">{t.title}</span>
+          )}
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>

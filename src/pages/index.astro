@@ -1,0 +1,195 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import PublicationCard from "../components/PublicationCard.astro";
+import { publications } from "../data/publications";
+
+const featured = publications.filter((p) => p.featured);
+---
+
+<BaseLayout
+  title="Antonio Terpin"
+  description="PhD researcher at ETH Zürich. AI for science, optimization, optimal transport, and active fluid control in the physical world."
+>
+  <!-- Hero -->
+  <section id="about" class="rule-0 scroll-mt-24">
+    <div class="shell pt-20 md:pt-28 pb-12 md:pb-16">
+      <div class="grid md:grid-cols-12 gap-10 md:gap-14 items-center">
+        <div class="md:col-span-8">
+          <div class="text-xs uppercase tracking-[0.18em] text-[color:var(--color-muted)] mb-4">
+            ETH Zürich · PhD researcher
+          </div>
+          <h1 class="display text-4xl sm:text-5xl md:text-6xl text-[color:var(--color-ink)]">
+            Antonio Terpin.
+          </h1>
+          <div class="mt-6 prose-lab max-w-2xl">
+            <p>
+              I'm an aspiring full-stack scientist, currently a PhD student
+              with{" "}
+              <a href="https://raffaello.name" target="_blank" rel="noopener">Raff D'Andrea</a>{" "}
+              and{" "}
+              <a
+                href="https://hest.ethz.ch/en/department/people/professors/persdetail.MTY3MjM5.TGlzdC85Miw5ODYyMzU0MDI=.html"
+                target="_blank"
+                rel="noopener">Simone Schürle</a
+              >{" "}
+              at ETH Zürich. Ever since I was a kid I have been broadly
+              interested in computer science, physics, robotics, and
+              mathematical puzzles. I love science and engineering —
+              currently, working on AI for science with a focus on active
+              fluid control.
+            </p>
+            <p>
+              I completed my M.Sc. in Robotics, Systems and Control at ETH
+              Zürich in 2023 with a focus on optimization and optimal
+              transport. For my work I was awarded the ETH Medal, Willi
+              Studer Prize, and the ASRO/SVO award.
+            </p>
+            <p>
+              I used to play{" "}
+              <a
+                href="https://en.wikipedia.org/wiki/ASD_Cordenons_Calcio"
+                target="_blank"
+                rel="noopener">football</a
+              >, now I enjoy running (marathon time: 3h 30 min), cycling on
+              the Alps, skiing, and much more. I recently got obsessed with
+              Bachata. Otherwise, I like to <a href="/bookshelf">read</a> and{" "}
+              <a href="/pet-projects">build things</a>.
+            </p>
+          </div>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a
+              href="/research"
+              class="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm bg-[color:var(--color-ink)] text-[color:var(--color-paper)] hover:bg-[color:var(--color-accent)] transition-colors"
+            >
+              Research <span aria-hidden="true">→</span>
+            </a>
+            <a
+              href="https://activefluidcontrol.com"
+              target="_blank"
+              rel="noopener"
+              class="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm border border-[color:var(--color-line-2)] text-[color:var(--color-ink)] hover:border-[color:var(--color-ink)] transition-colors"
+            >
+              Active Fluid Control <span aria-hidden="true">↗</span>
+            </a>
+            <a
+              href="mailto:aterpin@ethz.ch"
+              class="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm border border-[color:var(--color-line-2)] text-[color:var(--color-ink)] hover:border-[color:var(--color-ink)] transition-colors"
+            >
+              Email
+            </a>
+          </div>
+          <div class="mt-6 text-sm text-[color:var(--color-muted)]">
+            Also on{" "}
+            <a
+              class="text-[color:var(--color-accent)] hover:text-[color:var(--color-ink)]"
+              href="https://scholar.google.com/citations?hl=en&user=IFx4XfoAAAAJ"
+              target="_blank"
+              rel="noopener">Google Scholar</a
+            >{" "}
+            and{" "}
+            <a
+              class="text-[color:var(--color-accent)] hover:text-[color:var(--color-ink)]"
+              href="https://github.com/antonioterpin"
+              target="_blank"
+              rel="noopener">GitHub</a
+            >.
+          </div>
+        </div>
+        <div class="md:col-span-4 flex md:justify-end">
+          <img
+            src="/media/people/me.jpeg"
+            alt="Antonio Terpin"
+            class="w-48 h-48 md:w-56 md:h-56 rounded-full object-cover border border-[color:var(--color-line)]"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Active Fluid Control feature -->
+  <section class="relative isolate overflow-hidden rule">
+    <img
+      src="/images/skill-acquisition.jpg"
+      alt="Cylinder wake in the Active Fluid Control water channel"
+      class="absolute inset-0 -z-10 w-full h-full object-cover"
+      loading="lazy"
+      decoding="async"
+    />
+    <div
+      class="absolute inset-0 -z-10 bg-gradient-to-t from-black/75 via-black/55 to-black/40"
+    ></div>
+    <div class="shell py-20 md:py-28">
+      <div class="grid md:grid-cols-12 gap-8 md:gap-12 items-start">
+        <div class="md:col-span-5 text-[color:var(--color-paper)]">
+          <div class="text-xs uppercase tracking-[0.18em] text-white/80 mb-3">
+            Research project
+          </div>
+          <h2 class="display text-3xl md:text-4xl">
+            Active fluid control in the physical world.
+          </h2>
+          <a
+            href="https://activefluidcontrol.com"
+            target="_blank"
+            rel="noopener"
+            class="mt-6 inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm bg-[color:var(--color-paper)] text-[color:var(--color-ink)] hover:bg-[color:var(--color-accent)] hover:text-[color:var(--color-paper)] transition-colors"
+          >
+            activefluidcontrol.com <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+        <div class="md:col-span-7 prose-lab !text-white/90 [&_p]:!text-white/90 max-w-none">
+          <p>
+            Active control of fluid flows remains one of the most compelling
+            open frontiers in physical intelligence: it sits at the
+            intersection of infinite-dimensional dynamical systems, partial
+            observation, learning, control, and real-world experimentation.
+            Yet progress has been constrained by the absence of affordable,
+            reproducible experimental platforms that let ideas move rapidly
+            between theory, simulation, and hardware.
+          </p>
+          <p>
+            We treat the testbed not as the final contribution, but as an
+            enabling substrate for a broader research agenda: developing
+            methods that can learn, reason, and control complex fluid systems
+            from limited interaction and imperfect sensing.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured papers -->
+  <section class="rule">
+    <div class="shell py-16 md:py-20">
+      <SectionHeader
+        title="Featured."
+        cta={{ href: "/research", label: "All research" }}
+      />
+      <ul class="divide-y divide-[color:var(--color-line)] border-t border-[color:var(--color-line)]">
+        {featured.map((p) => (
+          <li class="py-4">
+            <PublicationCard
+              title={p.title}
+              authors={p.authors}
+              year={p.year}
+              venue={p.venue}
+              honors={p.honors}
+              status={p.status}
+              teaser={p.teaser}
+              arxiv={p.arxiv}
+              pdf={p.pdf}
+              code={p.code}
+              website={p.website}
+              websiteLabel={p.websiteLabel}
+              video={p.video}
+              featured={p.featured}
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+</BaseLayout>

@@ -1,0 +1,114 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import {
+  students,
+  studentAcknowledgments,
+  teachingPositions,
+} from "../data/students";
+
+const ongoing = students.filter((s) => s.ongoing);
+const completed = students.filter((s) => !s.ongoing);
+---
+
+<BaseLayout
+  title="Teaching & supervision"
+  description="Teaching, mentoring, and students supervised by Antonio Terpin."
+>
+  <section class="shell pt-10 md:pt-14 pb-6">
+    <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Teaching & supervision" }]} />
+  </section>
+
+  <section class="shell pb-8">
+    <div class="max-w-2xl">
+      <h1 class="display text-4xl md:text-5xl text-[color:var(--color-ink)]">Teaching &amp; supervision.</h1>
+      <p class="mt-4 text-lg text-[color:var(--color-ink-2)] leading-relaxed">
+        I supervise students at ETH and lead the teaching team for our
+        Programming and Optimal Control class with Raff. Always happy to talk
+        to motivated students — send your transcripts and a brief description
+        of a project you've worked on to{" "}
+        <a class="text-[color:var(--color-accent)] underline underline-offset-2" href="mailto:aterpin@ethz.ch">aterpin@ethz.ch</a>.
+      </p>
+    </div>
+  </section>
+
+  {ongoing.length > 0 && (
+    <section class="shell pb-8">
+      <h2 class="display text-xl text-[color:var(--color-ink)] mb-3">Ongoing students</h2>
+      <ul class="list-disc pl-5 space-y-1.5 text-[15px] text-[color:var(--color-ink-2)] leading-relaxed marker:text-[color:var(--color-muted)]">
+        {ongoing.map((s) => (
+          <li>
+            <span class="text-[color:var(--color-muted)]">{s.year}</span>
+            {" — "}
+            <span class="text-[color:var(--color-ink)]">{s.name}</span>
+            <span class="text-[color:var(--color-muted)]">{`, ${s.project}.`}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <section class="shell pb-8">
+    <h2 class="display text-xl text-[color:var(--color-ink)] mb-3 mt-4">Past students</h2>
+    <ul class="list-disc pl-5 space-y-2 text-[15px] text-[color:var(--color-ink-2)] leading-relaxed marker:text-[color:var(--color-muted)]">
+      {completed.map((s) => (
+        <li>
+          <span class="text-[color:var(--color-muted)]">{s.year}</span>
+          {" — "}
+          <span class="text-[color:var(--color-ink)]">{s.name}</span>
+          {", "}
+          <span class="text-[color:var(--color-ink-2)]">{s.project}.</span>
+          {s.description && (
+            <span class="inline-links text-[color:var(--color-muted)]">
+              {" "}<Fragment set:html={s.description} />
+            </span>
+          )}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="shell pb-8">
+    <h2 class="display text-xl text-[color:var(--color-ink)] mb-3 mt-4">From thesis acknowledgments</h2>
+    <ul class="space-y-3 text-[14px] text-[color:var(--color-muted)] leading-relaxed">
+      {studentAcknowledgments.map((a) => (
+        <li class="border-l-2 border-[color:var(--color-line-2)] pl-4">
+          <p>{a.text}</p>
+          <p class="mt-1 text-[12px] font-mono uppercase tracking-wider">— {a.name}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="shell pb-12">
+    <h2 class="display text-xl text-[color:var(--color-ink)] mb-3 mt-4">Teaching positions</h2>
+    <ul class="list-disc pl-5 space-y-2 text-[15px] text-[color:var(--color-ink-2)] leading-relaxed marker:text-[color:var(--color-muted)]">
+      {teachingPositions.map((t) => (
+        <li>
+          <span class="text-[color:var(--color-muted)]">{t.years}</span>
+          {" — "}
+          <span class="text-[color:var(--color-ink)]">{t.role}</span>
+          {", "}
+          {t.url ? (
+            <a
+              href={t.url}
+              target="_blank"
+              rel="noopener"
+              class="text-[color:var(--color-ink)] hover:text-[color:var(--color-accent)] underline underline-offset-2 decoration-[color:var(--color-line-2)] hover:decoration-[color:var(--color-accent)]"
+            >
+              {t.course}
+            </a>
+          ) : (
+            <span class="text-[color:var(--color-ink-2)]">{t.course}</span>
+          )}
+          {t.instructor && (
+            <span class="text-[color:var(--color-muted)]">{` (with ${t.instructor})`}</span>
+          )}
+          {t.notes && (
+            <span class="text-[color:var(--color-muted)]">{`. ${t.notes}`}</span>
+          )}
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>

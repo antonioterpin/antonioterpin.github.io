@@ -1,0 +1,52 @@
+---
+import "../styles/global.css";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description = "Antonio Terpin — PhD researcher at ETH Zürich working on AI for science, optimization, and active fluid control.",
+  ogImage = "/media/people/me.jpeg",
+} = Astro.props;
+
+const fullTitle = title === "Antonio Terpin" ? title : `${title} · Antonio Terpin`;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://antonioterpin.com");
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical.toString()} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/media/people/me.jpeg" type="image/jpeg" />
+    <link rel="preconnect" href="https://rsms.me/" />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+  </head>
+  <body class="min-h-screen flex flex-col antialiased">
+    <a
+      href="#content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-[color:var(--color-ink)] focus:text-[color:var(--color-paper)] focus:px-3 focus:py-1.5 focus:rounded"
+      >Skip to content</a
+    >
+    <Nav />
+    <main id="content" class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

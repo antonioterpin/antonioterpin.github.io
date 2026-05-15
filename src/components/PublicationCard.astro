@@ -1,0 +1,122 @@
+---
+import LinkBadge from "./LinkBadge.astro";
+
+interface Props {
+  title: string;
+  authors: string[];
+  year: number;
+  venue?: string;
+  honors?: string[];
+  status?: "preprint" | "conference" | "journal" | "in-progress";
+  teaser?: string;
+  arxiv?: string;
+  doi?: string;
+  pdf?: string;
+  code?: string[];
+  website?: string;
+  websiteLabel?: string;
+  video?: string;
+  cover?: string;
+  featured?: boolean;
+}
+
+const {
+  title,
+  authors,
+  year,
+  venue,
+  honors = [],
+  status,
+  teaser,
+  arxiv,
+  doi,
+  pdf,
+  code = [],
+  website,
+  websiteLabel = "Website",
+  video,
+} = Astro.props;
+
+const isExt = (u?: string) => !!u && /^https?:/.test(u);
+const primaryLink = arxiv || pdf || website || code[0];
+---
+
+<div>
+  {honors.length > 0 && (
+    <div class="mb-1.5">
+      <span class="inline-flex items-center rounded-sm bg-[color:var(--color-accent)] text-[color:var(--color-paper)] px-2 py-0.5 text-[10px] font-mono uppercase tracking-[0.15em] shadow-sm">
+        {honors.join(" · ")}
+      </span>
+    </div>
+  )}
+  <div class="flex items-baseline gap-2 flex-wrap">
+    {primaryLink ? (
+      <a
+        href={primaryLink}
+        target={isExt(primaryLink) ? "_blank" : undefined}
+        rel={isExt(primaryLink) ? "noopener" : undefined}
+        class="text-[15px] md:text-base text-[color:var(--color-ink)] hover:text-[color:var(--color-accent)] underline underline-offset-2 decoration-[color:var(--color-line-2)] hover:decoration-[color:var(--color-accent)]"
+      >
+        {title}
+      </a>
+    ) : (
+      <span class="text-[15px] md:text-base text-[color:var(--color-ink)]">{title}</span>
+    )}
+    {venue && venue.toLowerCase() !== "preprint" ? (
+      <span class="inline-flex items-center rounded-full bg-[color:var(--color-ink)] text-[color:var(--color-paper)] px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider">
+        {venue}
+      </span>
+    ) : (
+      <span class="inline-flex items-center rounded-full border border-[color:var(--color-line-2)] bg-[color:var(--color-paper-2)] text-[color:var(--color-ink-2)] px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider">
+        Preprint · {year}
+      </span>
+    )}
+  </div>
+  <div class="text-[13px] text-[color:var(--color-muted)] mt-0.5">
+    <Fragment set:html={authors.join(", ")} />
+  </div>
+  {teaser && (
+    <details class="mt-1.5 pub-details">
+      <summary class="cursor-pointer text-[12px] font-mono uppercase tracking-wider text-[color:var(--color-accent)] hover:text-[color:var(--color-ink)] inline-flex items-center gap-1 list-none">
+        <span class="pub-details-label-closed">Abstract ↓</span>
+        <span class="pub-details-label-open hidden">Hide ↑</span>
+      </summary>
+      <p class="mt-2 text-[14px] text-[color:var(--color-ink-2)] leading-relaxed max-w-[72ch]">
+        {teaser}
+      </p>
+    </details>
+  )}
+  {(website || pdf || arxiv || doi || code.length > 0 || video) && (
+    <div class="flex flex-wrap gap-1.5 mt-2">
+      {website && (
+        <LinkBadge
+          href={website}
+          label={websiteLabel}
+          kind="default"
+          external={isExt(website)}
+        />
+      )}
+      {arxiv && <LinkBadge href={arxiv} label="arXiv" kind="paper" external />}
+      {pdf && <LinkBadge href={pdf} label="PDF" kind="paper" external={isExt(pdf)} />}
+      {doi && <LinkBadge href={doi} label="DOI" kind="paper" external />}
+      {code.map((c) => (
+        <LinkBadge href={c} label="Code" kind="code" external />
+      ))}
+      {video && (
+        <LinkBadge href={video} label="Video" kind="video" external={isExt(video)} />
+      )}
+    </div>
+  )}
+</div>
+
+<style>
+  .pub-details[open] .pub-details-label-closed {
+    display: none;
+  }
+  .pub-details[open] .pub-details-label-open {
+    display: inline-flex;
+  }
+  .pub-details summary::-webkit-details-marker {
+    display: none;
+  }
+</style>

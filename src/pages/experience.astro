@@ -1,0 +1,95 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { experience } from "../data/experience";
+
+const internships = experience.filter(
+  (e) => e.kind === "internship" || e.kind === "consulting"
+);
+const freelance = experience.filter((e) => e.kind === "freelance");
+---
+
+<BaseLayout
+  title="Experience"
+  description="Internships, consulting, and freelance work by Antonio Terpin."
+>
+  <section class="shell pt-10 md:pt-14 pb-6">
+    <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Experience" }]} />
+  </section>
+
+  <section class="shell pb-8">
+    <div class="max-w-2xl">
+      <h1 class="display text-4xl md:text-5xl text-[color:var(--color-ink)]">Experience.</h1>
+      <p class="mt-4 text-lg text-[color:var(--color-ink-2)] leading-relaxed">
+        Internships, consulting, and freelance projects I squeezed in during
+        my studies.
+      </p>
+    </div>
+  </section>
+
+  <section class="shell pb-8">
+    <h2 class="display text-xl text-[color:var(--color-ink)] mb-3">Internships &amp; consulting</h2>
+    <ul class="list-disc pl-5 space-y-2 text-[15px] text-[color:var(--color-ink-2)] leading-relaxed marker:text-[color:var(--color-muted)]">
+      {internships.map((e) => (
+        <li>
+          <span class="text-[color:var(--color-muted)]">{e.year}</span>
+          {" — "}
+          {e.url ? (
+            <a
+              href={e.url}
+              target="_blank"
+              rel="noopener"
+              class="text-[color:var(--color-ink)] hover:text-[color:var(--color-accent)] underline underline-offset-2 decoration-[color:var(--color-line-2)] hover:decoration-[color:var(--color-accent)]"
+            >
+              {e.organization}
+            </a>
+          ) : (
+            <span class="text-[color:var(--color-ink)]">{e.organization}</span>
+          )}
+          {e.role && <span class="text-[color:var(--color-muted)]">{` (${e.role})`}</span>}
+          <span class="inline-links">
+            {". "}<Fragment set:html={e.description} />
+          </span>
+          {e.tags && e.tags.length > 0 && (
+            <span class="text-[color:var(--color-muted)] text-[13px]">
+              {" "}— {e.tags.join(", ")}.
+            </span>
+          )}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="shell pb-12">
+    <h2 class="display text-xl text-[color:var(--color-ink)] mb-3 mt-4">Freelance (selected)</h2>
+    <ul class="list-disc pl-5 space-y-2 text-[15px] text-[color:var(--color-ink-2)] leading-relaxed marker:text-[color:var(--color-muted)]">
+      {freelance.map((e) => (
+        <li>
+          <span class="text-[color:var(--color-muted)]">{e.year}</span>
+          {" — "}
+          {e.url ? (
+            <a
+              href={e.url}
+              target="_blank"
+              rel="noopener"
+              class="text-[color:var(--color-ink)] hover:text-[color:var(--color-accent)] underline underline-offset-2 decoration-[color:var(--color-line-2)] hover:decoration-[color:var(--color-accent)]"
+            >
+              {e.organization}
+            </a>
+          ) : (
+            <span class="text-[color:var(--color-ink)]">{e.organization}</span>
+          )}
+          {e.location && <span class="text-[color:var(--color-muted)]">{`, ${e.location}`}</span>}
+          <span class="inline-links">
+            {". "}<Fragment set:html={e.description} />
+          </span>
+          {e.tags && e.tags.length > 0 && (
+            <span class="text-[color:var(--color-muted)] text-[13px]">
+              {" "}— {e.tags.join(", ")}.
+            </span>
+          )}
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>

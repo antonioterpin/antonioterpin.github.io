@@ -1,0 +1,16 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Not found" description="Page not found.">
+  <section class="shell py-24 md:py-32 text-center">
+    <div class="text-xs font-mono uppercase tracking-[0.18em] text-[color:var(--color-muted)] mb-3">
+      404
+    </div>
+    <h1 class="display text-4xl md:text-5xl text-[color:var(--color-ink)]">Page not found.</h1>
+    <p class="mt-4 text-[color:var(--color-ink-2)]">
+      Try the <a class="text-[color:var(--color-accent)]" href="/">home page</a> or
+      <a class="text-[color:var(--color-accent)]" href="/research">research</a>.
+    </p>
+  </section>
+</BaseLayout>

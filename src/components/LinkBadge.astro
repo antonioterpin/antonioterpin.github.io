@@ -1,0 +1,30 @@
+---
+interface Props {
+  href: string;
+  label: string;
+  external?: boolean;
+  kind?: "default" | "code" | "paper" | "video" | "doc" | "download";
+}
+
+const { href, label, external, kind = "default" } = Astro.props;
+
+const icons: Record<string, string> = {
+  default: "→",
+  code: "{ }",
+  paper: "¶",
+  video: "▶",
+  doc: "§",
+  download: "↓",
+};
+const icon = icons[kind];
+---
+
+<a
+  href={href}
+  target={external ? "_blank" : undefined}
+  rel={external ? "noopener noreferrer" : undefined}
+  class="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--color-line-2)] bg-[color:var(--color-paper)] px-3 py-1 text-xs text-[color:var(--color-ink-2)] hover:border-[color:var(--color-ink)] hover:text-[color:var(--color-accent)] transition-colors"
+>
+  <span class="font-mono text-[color:var(--color-muted)] text-[10px] leading-none" aria-hidden="true">{icon}</span>
+  <span>{label}</span>
+</a>
