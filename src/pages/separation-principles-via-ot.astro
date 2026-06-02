@@ -1,0 +1,109 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+
+const works = [
+  {
+    title: "Dynamic Programming in Probability Spaces via Optimal Transport",
+    venue: "SIAM SICON · 2024",
+    href: "https://epubs.siam.org/doi/full/10.1137/23M1560902",
+    cover: "/projects/separation-principles-via-ot/dp-cover.jpg",
+    external: true,
+  },
+  {
+    title: "Learning diffusion at lightspeed",
+    venue: "NeurIPS 2024 · Oral",
+    href: "https://proceedings.neurips.cc/paper_files/paper/2024/hash/0ce1eb87dbb03fdfa872a93d15cfe333-Abstract-Conference.html",
+    cover: "/projects/separation-principles-via-ot/jko-cover.png",
+    external: true,
+  },
+  {
+    title: "A Separation Principle for Cooperative Multi-Agent Reinforcement Learning",
+    venue: "Preprint · 2026",
+    href: "/projects/separation-principles-via-ot/separation-principle-marl.pdf",
+    cover: "/projects/separation-principles-via-ot/manhattan-cover.png",
+    external: false,
+  },
+];
+---
+
+<BaseLayout
+  title="Separation Principles via Optimal Transport"
+  description="Three works on separation principles in probability spaces via optimal transport."
+>
+  <section class="shell pt-10 md:pt-14 pb-6">
+    <Breadcrumbs
+      items={[
+        { label: "Home", href: "/" },
+        { label: "Separation Principles via OT" },
+      ]}
+    />
+  </section>
+
+  <section class="shell pb-8">
+    <div class="max-w-2xl">
+      <h1 class="display text-4xl md:text-5xl text-[color:var(--color-ink)]">
+        Separation Principles via Optimal Transport.
+      </h1>
+      <p class="mt-4 text-lg text-[color:var(--color-ink-2)] leading-relaxed">
+        Splitting complex problems into simpler pieces — exactly.
+      </p>
+    </div>
+  </section>
+
+  <section class="shell pb-10">
+    <ul class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {works.map((w) => (
+        <li>
+          <a
+            href={w.href}
+            target={w.external ? "_blank" : "_blank"}
+            rel={w.external ? "noopener noreferrer" : undefined}
+            class="group block h-full border border-[color:var(--color-line)] bg-[color:var(--color-paper)] hover:border-[color:var(--color-ink)] transition-colors rounded-sm overflow-hidden"
+          >
+            <div class="aspect-[4/3] bg-[color:var(--color-paper-2)] overflow-hidden">
+              <img
+                src={w.cover}
+                alt={w.title}
+                loading="lazy"
+                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+              />
+            </div>
+            <div class="p-5 border-t border-[color:var(--color-line)]">
+              <div class="text-[11px] font-mono uppercase tracking-[0.15em] text-[color:var(--color-muted)] mb-2">
+                {w.venue}
+              </div>
+              <h2 class="text-[15px] md:text-base leading-snug text-[color:var(--color-ink)] group-hover:text-[color:var(--color-accent)]">
+                {w.title}
+              </h2>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="shell pb-16">
+    <p class="text-[color:var(--color-ink-2)]">
+      <a
+        href="https://meetings.siam.org/sess/dsp_programsess.cfm?SESSIONCODE=87738"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="underline underline-offset-2 decoration-[color:var(--color-line-2)] hover:text-[color:var(--color-accent)] hover:decoration-[color:var(--color-accent)]"
+      >
+        Talk at SIAM
+      </a><sup class="text-[color:var(--color-muted)] ml-0.5">1</sup>.
+    </p>
+    <p class="mt-3 text-sm text-[color:var(--color-muted)] leading-relaxed">
+      <sup>1</sup> I ended up giving the talk, and Nicolas{" "}
+      <a
+        href="https://meetings.siam.org/sess/dsp_programsess.cfm?SESSIONCODE=87661"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="underline underline-offset-2 decoration-[color:var(--color-line-2)] hover:text-[color:var(--color-accent)] hover:decoration-[color:var(--color-accent)]"
+      >this one</a>{" "}
+      instead (recommended to understand some of the tools used in these
+      works).
+    </p>
+  </section>
+</BaseLayout>
